@@ -3,11 +3,15 @@
 #pragma once
 
 #include "CoreMinimal.h"
+
 #include "GameFramework/Pawn.h"
 #include "UEWar/GameEnumClass.h"
 #include "UEWar/Data/MeleeUnitDataAsset.h"
 #include "GameUnitBase.generated.h"
 
+class UArrowComponent;
+class UCapsuleComponent;
+class UAnimMontage;
 struct FUnitAnimGroup;
 
 UCLASS()
@@ -27,7 +31,7 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 	EGameUnitType GetUnitType() const {return UnitType;}
-	void PlayAnimation(EGameUnitAnimType animType) const;
+	void PlayAnimation(EGameUnitAnimType animType);
 	template<typename T>
 	T* GetAIController()
 	{
@@ -39,8 +43,14 @@ public:
 protected:
 	UPROPERTY(Category ="GameUnitBase_Variable", EditDefaultsOnly)
 	TObjectPtr<USkeletalMeshComponent> MeshComponent;
+	UPROPERTY(Category ="GameUnitBase_Variable", EditDefaultsOnly)
+	TObjectPtr<UArrowComponent> ArrowComponent;
+	UPROPERTY(Category ="GameUnitBase_Variable", EditDefaultsOnly)
+	TObjectPtr<UCapsuleComponent> CapsuleComponent;
 
 	UPROPERTY(Category ="GameUnitBase_Variable",EditDefaultsOnly)
 	EGameUnitType UnitType;
 	TObjectPtr<FUnitAnimGroup> AnimationGroup;
+	UPROPERTY(Transient)
+	TObjectPtr<UAnimMontage> CurrentMontage;
 };

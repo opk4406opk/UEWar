@@ -6,14 +6,25 @@
 #include "UEWar/InGameMode.h"
 #include "UEWar/UWGameInstance.h"
 #include "UEWar/Data/GameDataSupervisor.h"
+#include "Components/ArrowComponent.h"
+#include "Components/CapsuleComponent.h"
+#include "Runtime/Engine/Classes/Animation/AnimInstance.h"
 
 // Sets default values
 AGameUnitBase::AGameUnitBase()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+
+	CapsuleComponent = CreateDefaultSubobject<UCapsuleComponent>(TEXT("CapsuleComponent"));
+	RootComponent = CapsuleComponent;
+	
 	MeshComponent = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("SkeletalMeshComponent"));
-	MeshComponent->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+	MeshComponent->SetupAttachment(RootComponent);
+	MeshComponent->SetRelativeRotation(FRotator(0.0f, -90.0f ,0.0f));
+	
+	ArrowComponent = CreateDefaultSubobject<UArrowComponent>(TEXT("ArrowComponent"));
+	ArrowComponent->SetupAttachment(RootComponent);
 
 	UnitType = EGameUnitType::None;
 }
@@ -32,10 +43,11 @@ void AGameUnitBase::Tick(float DeltaTime)
 
 }
 
-void AGameUnitBase::PlayAnimation(EGameUnitAnimType animType) const
+void AGameUnitBase::PlayAnimation(EGameUnitAnimType animType)
 {
 	const auto animSoftPtr = AnimationGroup->Animations.Find(animType);
-	MeshComponent->PlayAnimation(animSoftPtr->LoadSynchronous(), true);
+	CurrentMontage = MeshComponent->GetAnimInstance()->PlaySlotAnimationAsDynamicMontage(animSoftPtr->LoadSynchronous(), TEXT("DefaultSlot"),
+		0.25f, 0.25f, 1.0f, 1000, -1.0f, 0.0f);
 }
 
 AGameUnitBase::~AGameUnitBase()

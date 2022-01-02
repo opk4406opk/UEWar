@@ -10,7 +10,7 @@ void AInGameMode::BeginPlay()
 	Super::BeginPlay();
 	
 	CurrentLevelScriptActor = Cast<AInGameLevelScriptActor>(GetWorld()->GetLevelScriptActor());
-	GetWorld()->GetFirstPlayerController()->SetViewTarget(Cast<AActor>(CurrentLevelScriptActor->FixedCameraActor));
+	//GetWorld()->GetFirstPlayerController()->SetViewTarget(Cast<AActor>(CurrentLevelScriptActor->FixedCameraActor));
 }
 
 void AInGameMode::EndPlay(const EEndPlayReason::Type EndPlayReason)
