@@ -4,12 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "Engine/LevelScriptActor.h"
+#include "GameFramework/PlayerStart.h"
 #include "InGameLevelScriptActor.generated.h"
 
 /**
  * 
  */
-
+class APlayerStart;
 class ACameraActor;
 
 UCLASS()
@@ -19,5 +20,7 @@ class UEWAR_API AInGameLevelScriptActor : public ALevelScriptActor
 
 public:
 	UPROPERTY(EditDefaultsOnly)
-	ACameraActor* FixedCameraActor;
+	TObjectPtr<ACameraActor> FixedCameraActor;
+	UPROPERTY(EditDefaultsOnly)
+	TObjectPtr<APlayerStart> PlayerStartPoint;
 };

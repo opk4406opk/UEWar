@@ -4,14 +4,19 @@
 #include "StartModeUI.h"
 
 #include "Kismet/GameplayStatics.h"
+#include "UEWar/StartGameMode.h"
 
 void UStartModeUI::OnStartGame()
 {
-	UGameplayStatics::OpenLevel(GetWorld(), TEXT("InGameLevel"));
+	UGameplayStatics::OpenLevelBySoftObjectPtr(GetWorld(), InGameLevelPtr);
 }
 
 void UStartModeUI::NativeConstruct()
 {
 	Super::NativeConstruct();
 	PlayAnimation(OpenAnim);
+
+	AStartGameMode* startMode = Cast<AStartGameMode>(GetWorld()->GetAuthGameMode());
+	check(startMode);
+	InGameLevelPtr = startMode->InGameLevelPtr;
 }

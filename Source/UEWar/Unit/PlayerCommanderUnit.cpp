@@ -29,7 +29,10 @@ void APlayerCommanderUnit::BeginPlay()
 #if WITH_EDITOR
 	FollowCamera->SetActorLabel(FString("PlayerFollowCamera"));
 #endif
-	FollowCamera->SetActorLocation(GetActorLocation() + FollowCamOffset);
+	// init set offset.
+	const FVector initCamLocation = GetActorLocation();
+	InitCameraDistance = CalcCameraDistance(initCamLocation);
+	FollowCamera->SetActorLocation(initCamLocation + InitCameraDistance);
 	//////////////////////////////////////////////////////////////////////////////////
 
 	const FRotator cameraRot = UKismetMathLibrary::FindLookAtRotation(FollowCamera->GetActorLocation(), GetActorLocation());
@@ -41,21 +44,39 @@ void APlayerCommanderUnit::BeginPlay()
 	PossessedBy(PlayerController);
 	SetupPlayerInputComponent(InputComponent);
 
-	InputComponent->BindAxis(("Key_Up"), this, &APlayerCommanderUnit::OnPressedUpKey);
-	InputComponent->BindAxis(("Key_Down"), this, &APlayerCommanderUnit::OnPressedDownKey);
-	InputComponent->BindAxis(("Key_Left"),this, &APlayerCommanderUnit::OnPressedLeftKey);
-	InputComponent->BindAxis(("Key_Right"), this, &APlayerCommanderUnit::OnPressedRightKey);
+	InputComponent->BindAxis(("MoveForward"), this, &APlayerCommanderUnit::OnPressedMoveForward);
+	InputComponent->BindAxis(("MoveRight"), this, &APlayerCommanderUnit::OnPressedRight);
 
-	InputComponent->BindAxis(("AxisMouseX"), this, &APlayerCommanderUnit::OnAxisX);
-	InputComponent->BindAxis(("AxisMouseY"), this, &APlayerCommanderUnit::OnAxisY);
+	InputComponent->BindAxis(("AxisX"), this, &APlayerCommanderUnit::OnChangeAxisX);
+	InputComponent->BindAxis(("AxisY"), this, &APlayerCommanderUnit::OnChangeAxisY);
+	InputComponent->BindAxis("CameraZoom", this, &APlayerCommanderUnit::OnCameraZoom);
+	InputComponent->BindAxis("CameraRotation", this, &APlayerCommanderUnit::OnCameraRotation);
 }
 
 void APlayerCommanderUnit::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	TValue += DeltaTime * 60.0f;
+	if(TValue >= 360.0f) TValue = 0.0f;
+
+	// set player location and rotation.
+	const FVector finalDir = ForwardMove + RightMove;
+	const FVector newPlayerLoc = GetActorLocation() + finalDir;
+	const FRotator newPlayerRot = UKismetMathLibrary::FindLookAtRotation(GetActorLocation(), newPlayerLoc);
+	SetActorLocation(FMath::Lerp<FVector>(GetActorLocation(), newPlayerLoc, 0.5f));
+	if(GetActorRotation() != newPlayerRot)
+	{
+		SetActorRotation(newPlayerRot);
+	}
 	// camera follow target.
-	FollowCamera->SetActorLocation(GetActorLocation() + FollowCamOffset);
+	const FVector verticalValue = UKismetMathLibrary::RotateAngleAxis(GetActorLocation() / 20.0f, CameraAddOffset.X, GetActorUpVector());
+	const FVector addOffset = FVector(0.0f, 0.0f, CameraAddOffset.Y);
+	FVector newCamLoc = GetActorLocation() + addOffset + verticalValue;
+	newCamLoc += CalcCameraDistance(newCamLoc);
+	// set camera location and rotation.
+	const FRotator lookRotation = UKismetMathLibrary::FindLookAtRotation(newCamLoc, GetActorLocation());
+	FollowCamera->SetActorLocationAndRotation(newCamLoc, lookRotation);
 }
 
 APlayerCommanderUnit::~APlayerCommanderUnit()
@@ -67,57 +88,100 @@ void APlayerCommanderUnit::EndPlay(const EEndPlayReason::Type EndPlayReason)
 	Super::EndPlay(EndPlayReason);
 }
 
-void APlayerCommanderUnit::OnPressedUpKey(float axisValue)
+void APlayerCommanderUnit::OnPressedMoveForward(float axisValue)
 {
-	if(axisValue <= 0.0f) {return;}
-
-	const FVector dir = GetActorRotation().UnrotateVector(GetActorForwardVector());
-	TArray<FStringFormatArg> formatArg;
-	formatArg.Add(FString::SanitizeFloat(dir.X));
-	formatArg.Add(FString::SanitizeFloat(dir.Y));
-	formatArg.Add(FString::SanitizeFloat(dir.Z));
-	UE_LOG(LogTemp, Log, TEXT("OnPressedUpKey:: dir : %s"), *FString::Format(TEXT("x : {0} y : {1} z : {2}"), formatArg));
-	const FVector newPos = dir * axisValue * MoveSpeed + GetActorTransform().GetLocation();
-	SetActorLocation(newPos);
-	PlayAnimation(EGameUnitAnimType::Run);
+	const FVector originLoc = GetActorLocation();
+	const FRotator originRot = GetActorRotation();
+	
+	FVector dir = GetActorRotation().UnrotateVector(GetActorForwardVector());
+	const FVector camLookDir = FollowCamera->GetActorForwardVector().Rotation().RotateVector(dir);
+	dir.X = camLookDir.X;
+	dir.Y = camLookDir.Y;
+	ForwardMove = dir * axisValue * MoveSpeed;
+	
+	//TArray<FStringFormatArg> formatArg;
+	//formatArg.Add(FString::SanitizeFloat(axisValue));
+	//UE_LOG(LogTemp, Log, TEXT("APlayerCommanderUnit::OnPressedMoveForward() axis : %s"), *FString::Format(TEXT("{0}"), formatArg));
+	
+}
+void APlayerCommanderUnit::OnPressedRight(float axisValue)
+{
+	const FVector originLoc = GetActorLocation();
+	const FRotator originRot = GetActorRotation();
+	
+	FVector dir = GetActorRotation().UnrotateVector(GetActorRightVector());
+	const FVector camLookDir = FollowCamera->GetActorForwardVector().Rotation().RotateVector(dir);
+	dir.X = camLookDir.X;
+	dir.Y = camLookDir.Y;
+	RightMove = dir * axisValue * MoveSpeed;
+	
+	// TArray<FStringFormatArg> formatArg;
+	// formatArg.Add(FString::SanitizeFloat(LerpLocation.X));
+	// formatArg.Add(FString::SanitizeFloat(LerpLocation.Y));
+	// formatArg.Add(FString::SanitizeFloat(LerpLocation.Z));
+	// UE_LOG(LogTemp, Log, TEXT("APlayerCommanderUnit::OnPressedRight() LerpLocation : %s"), *FString::Format(TEXT("x : {0}, y : {1}, z : {2}"), formatArg));
+	//
 }
 
-void APlayerCommanderUnit::OnPressedDownKey(float axisValue)
-{
-	if(axisValue <= 0.0f) {return;}
 
-	const FVector dir = GetActorRotation().UnrotateVector(GetActorForwardVector() * -1.0f);
-	const FVector newPos = dir * axisValue * MoveSpeed + GetActorTransform().GetLocation();
-	SetActorLocation(newPos);
-	PlayAnimation(EGameUnitAnimType::Run);
+void APlayerCommanderUnit::OnChangeAxisX(float axisValue)
+{
+	//if(axisValue == 0.0f) {return;}
+	
+	InputAxis.X = axisValue;
+	
+	//TArray<FStringFormatArg> formatArg;
+	//formatArg.Add(FString::SanitizeFloat(axisValue));
+	//UE_LOG(LogTemp, Log, TEXT("APlayerCommanderUnit::OnMouseAxisX() axis : %s"), *FString::Format(TEXT("{0}"), formatArg));
 }
 
-void APlayerCommanderUnit::OnPressedLeftKey(float axisValue)
+void APlayerCommanderUnit::OnChangeAxisY(float axisValue)
 {
-	if(axisValue <= 0.0f) {return;}
+	//if(axisValue == 0.0f) {return;}
+	
+	InputAxis.Y = axisValue;
 
-	const FVector dir = GetActorRotation().UnrotateVector(GetActorRightVector() * -1.0f);
-	const FVector newPos = dir * axisValue * MoveSpeed + GetActorTransform().GetLocation();
-	SetActorLocation(newPos);
-	PlayAnimation(EGameUnitAnimType::Run);
+	//TArray<FStringFormatArg> formatArg;
+	//formatArg.Add(FString::SanitizeFloat(axisValue));
+	//UE_LOG(LogTemp, Log, TEXT("APlayerCommanderUnit::OnMouseAxisY() axis : %s"), *FString::Format(TEXT("{0}"), formatArg));
 }
 
-void APlayerCommanderUnit::OnPressedRightKey(float axisValue)
+void APlayerCommanderUnit::OnCameraZoom(float axisValue)
 {
-	if(axisValue <= 0.0f) {return;}
-
-	const FVector dir = GetActorRotation().UnrotateVector(GetActorRightVector());
-	const FVector newPos = dir * axisValue * MoveSpeed + GetActorTransform().GetLocation();
-	SetActorLocation(newPos);
-	PlayAnimation(EGameUnitAnimType::Run);
+	const float delta = 100.0f;
+	CameraDistance += (delta * axisValue);
+	
+	// TArray<FStringFormatArg> formatArg;
+	// formatArg.Add(FString::SanitizeFloat(axisValue));
+	// formatArg.Add(FString::SanitizeFloat(CameraDistance));
+	// UE_LOG(LogTemp, Log, TEXT("APlayerCommanderUnit::OnCameraZoom() [%s]"), *FString::Format(TEXT("axisValue : {0}, cameraDistance : {1}"), formatArg));
 }
 
-void APlayerCommanderUnit::OnAxisX(float axisValue)
+void APlayerCommanderUnit::OnCameraRotation(float axisValue)
 {
-	if(axisValue <= 0.0f) {return;}	
+	if(axisValue != 1.0f)
+	{
+		return;
+	}
+
+	constexpr float moveDelta = 5.0f;
+
+	CameraAddOffset.X += InputAxis.X * moveDelta * -1.0f;
+	if(FMath::Abs(CameraAddOffset.X) >= 360.0f)
+	{
+		CameraAddOffset.X = 0.0f;
+	}
+	CameraAddOffset.Y += InputAxis.Y * moveDelta * -1.0f;
+	
+	//TArray<FStringFormatArg> formatArg;
+	//formatArg.Add(FString::SanitizeFloat(CameraAddOffset.X));
+	//formatArg.Add(FString::SanitizeFloat(CameraAddOffset.Y));
+	//UE_LOG(LogTemp, Log, TEXT("APlayerCommanderUnit::OnMouseRightBtn() CameraAddOffset : %s"), *FString::Format(TEXT("x : {0}, y : {1}"), formatArg));
 }
 
-void APlayerCommanderUnit::OnAxisY(float axisValue)
+FVector APlayerCommanderUnit::CalcCameraDistance(const FVector& camLocation) const
 {
-	if(axisValue <= 0.0f) {return;}
+	const FVector dir = GetActorLocation() - camLocation;
+	return dir.GetSafeNormal() * CameraDistance * -1.0f;
 }
+

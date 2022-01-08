@@ -9,6 +9,7 @@
 #include "StartGameMode.generated.h"
 
 class UStartModeUI;
+class UWorld;
 class UUIWidgetsAsset;
 /**
  * 
@@ -24,7 +25,8 @@ public:
 	virtual void InitGame(const FString& MapName, const FString& Options, FString& ErrorMessage) override;
 	virtual void StartPlay() override;
 public:
-	
+	UPROPERTY(EditDefaultsOnly)
+	TSoftObjectPtr<UWorld> InGameLevelPtr;
 private:
 	UPROPERTY(Transient)
 	UTableAsset* TableAssetInstance = nullptr;

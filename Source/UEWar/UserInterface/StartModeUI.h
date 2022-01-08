@@ -25,4 +25,6 @@ protected:
 private:
 	UPROPERTY(Meta=(BindWidgetAnim), Transient)
 	UWidgetAnimation* OpenAnim;
+	UPROPERTY(Transient)
+	TSoftObjectPtr<UWorld> InGameLevelPtr;
 };

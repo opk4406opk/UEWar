@@ -45,6 +45,10 @@ void AGameUnitBase::Tick(float DeltaTime)
 
 void AGameUnitBase::PlayAnimation(EGameUnitAnimType animType)
 {
+	if(IsValid(CurrentMontage) == true)
+	{
+	}
+	
 	const auto animSoftPtr = AnimationGroup->Animations.Find(animType);
 	CurrentMontage = MeshComponent->GetAnimInstance()->PlaySlotAnimationAsDynamicMontage(animSoftPtr->LoadSynchronous(), TEXT("DefaultSlot"),
 		0.25f, 0.25f, 1.0f, 1000, -1.0f, 0.0f);
