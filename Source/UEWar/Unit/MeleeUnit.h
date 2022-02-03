@@ -26,4 +26,6 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 	virtual ~AMeleeUnit() override;
+	virtual void PlayAnimation(EGameUnitAnimType animType) override;
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 };

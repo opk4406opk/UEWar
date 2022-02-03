@@ -13,3 +13,9 @@ UUWGameInstance* AUEWarGameModeBase::GetGameInstance()
 	}
 	return CurGameInstance;
 }
+
+const float AUEWarGameModeBase::GetFPS() const
+{
+	const float fps = 1.0f / GetWorld()->DeltaTimeSeconds;
+	return fps;
+}

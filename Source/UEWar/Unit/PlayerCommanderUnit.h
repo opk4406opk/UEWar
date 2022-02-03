@@ -10,6 +10,7 @@ class USpringArmComponent;
 class UInputComponent;
 class ACameraActor;
 class AInGamePlayerController;
+class UPlayerDataAsset;
 /**
  * 
  */
@@ -33,7 +34,11 @@ private:
 	void OnCameraRotation(float axisValue);
 private:
 	FVector CalcCameraDistance(const FVector& camLocation) const;
+public:
+	virtual void PlayAnimation(EGameUnitAnimType animType) final;
 private:
+	UPROPERTY(Transient)
+	TObjectPtr<UPlayerDataAsset> DataAsset;
 	UPROPERTY(EditDefaultsOnly, Category="Player_Component")
 	TObjectPtr<USpringArmComponent> SpringArmComponent;
 	UPROPERTY(EditDefaultsOnly, Category="PlayerCamera_Property")
@@ -48,13 +53,14 @@ private:
 	TObjectPtr<ACameraActor> FollowCamera;
 	UPROPERTY(Transient)
 	TObjectPtr<AInGamePlayerController> PlayerController = nullptr;
-
+private:
 	FVector2D InputAxis = FVector2D::ZeroVector;
 	FVector InitCameraDistance = FVector::ZeroVector;
 	FVector2D CameraAddOffset;
 
 	FVector ForwardMove;
 	FVector RightMove;
+	FVector LookDirection;
 	///
 	///
 	float TValue = 0.0f;

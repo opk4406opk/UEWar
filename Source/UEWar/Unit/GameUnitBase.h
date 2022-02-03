@@ -9,6 +9,7 @@
 #include "UEWar/Data/MeleeUnitDataAsset.h"
 #include "GameUnitBase.generated.h"
 
+class UUnitStateManager;
 class UArrowComponent;
 class UCapsuleComponent;
 class UAnimMontage;
@@ -31,7 +32,7 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 	EGameUnitType GetUnitType() const {return UnitType;}
-	void PlayAnimation(EGameUnitAnimType animType);
+	virtual void PlayAnimation(EGameUnitAnimType animType);
 	template<typename T>
 	T* GetAIController()
 	{
@@ -40,6 +41,8 @@ public:
 
 	virtual ~AGameUnitBase() override;
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+protected:
+	virtual void OnAnimationEnd(UAnimMontage* animMontage, bool bInterrupted);
 protected:
 	UPROPERTY(Category ="GameUnitBase_Variable", EditDefaultsOnly)
 	TObjectPtr<USkeletalMeshComponent> MeshComponent;
@@ -53,4 +56,8 @@ protected:
 	TObjectPtr<FUnitAnimGroup> AnimationGroup;
 	UPROPERTY(Transient)
 	TObjectPtr<UAnimMontage> CurrentMontage;
+
+	UPROPERTY(Transient)
+	TObjectPtr<UUnitStateManager> StateManager;
+
 };

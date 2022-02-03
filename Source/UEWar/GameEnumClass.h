@@ -16,6 +16,14 @@ enum class EGameUnitType : uint8
 };
 
 UENUM(BlueprintType)
+enum class EGameUnitState : uint8
+{
+	None,
+	Idle,
+	Move,
+};
+
+UENUM(BlueprintType)
 enum class EGameUnitAnimType : uint8
 {
 	None,
@@ -28,6 +36,15 @@ enum class EGameUnitAnimType : uint8
 	Count,
 };
 
+UENUM(BlueprintType)
+enum class EPlayerAnimType : uint8
+{
+	None,
+	Idle,
+	Walk,
+	Run,
+	Count,
+};
 
 /**
  * 

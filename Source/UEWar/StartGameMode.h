@@ -29,7 +29,7 @@ public:
 	TSoftObjectPtr<UWorld> InGameLevelPtr;
 private:
 	UPROPERTY(Transient)
-	UTableAsset* TableAssetInstance = nullptr;
+	TObjectPtr<UTableAsset> TableAssetInstance = nullptr;
 	UPROPERTY(Transient)
-	UStartModeUI* MainUIInstance = nullptr;
+	TObjectPtr<UStartModeUI> MainUIInstance = nullptr;
 };

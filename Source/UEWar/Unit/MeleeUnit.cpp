@@ -31,3 +31,13 @@ AMeleeUnit::~AMeleeUnit()
 {
 }
 
+void AMeleeUnit::PlayAnimation(EGameUnitAnimType animType)
+{
+	Super::PlayAnimation(animType);
+}
+
+void AMeleeUnit::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+	Super::EndPlay(EndPlayReason);
+}
+

@@ -9,6 +9,11 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "UEWar/Controller/InGamePlayerController.h"
 #include "Runtime/Engine/Classes/Camera/CameraActor.h"
+#include "UEWar/InGameMode.h"
+#include "UEWar/UWGameInstance.h"
+#include "UEWar/Data/GameDataSupervisor.h"
+#include "UEWar/State/UnitStateBase.h"
+#include "UEWar/State/UnitStateManager.h"
 
 APlayerCommanderUnit::APlayerCommanderUnit()
 {
@@ -21,8 +26,10 @@ APlayerCommanderUnit::APlayerCommanderUnit()
 
 void APlayerCommanderUnit::BeginPlay()
 {
+	// 플레이어 유닛 전용 애니메이션 데이터 에셋 설정.
+	DataAsset = Cast<AInGameMode>(GetWorld()->GetAuthGameMode())->GetGameInstance()->GetDataSupervisor()->PlayerDataAsset.LoadSynchronous();
 	Super::BeginPlay();
-
+	
 	// camera spawn and setting. ///////////////////////////////////////////////////////
 	FollowCamera = Cast<ACameraActor>(GetWorld()->SpawnActor(ACameraActor::StaticClass()));
 	FollowCamera->GetCameraComponent()->FieldOfView = CameraFOV;
@@ -63,12 +70,20 @@ void APlayerCommanderUnit::Tick(float DeltaTime)
 	// set player location and rotation.
 	const FVector finalDir = ForwardMove + RightMove;
 	const FVector newPlayerLoc = GetActorLocation() + finalDir;
-	const FRotator newPlayerRot = UKismetMathLibrary::FindLookAtRotation(GetActorLocation(), newPlayerLoc);
-	SetActorLocation(FMath::Lerp<FVector>(GetActorLocation(), newPlayerLoc, 0.5f));
-	if(GetActorRotation() != newPlayerRot)
+	if(finalDir != FVector::ZeroVector)
 	{
-		SetActorRotation(newPlayerRot);
+		LookDirection = finalDir;
+		const FRotator newPlayerRot = UKismetMathLibrary::FindLookAtRotation(GetActorLocation(), newPlayerLoc);
+		SetActorRotation(FMath::Lerp<FRotator>(GetActorRotation(), newPlayerRot, 0.5f));
+		SetActorLocation(newPlayerLoc);
+
+		StateManager->Change(EGameUnitState::Move, FStateUpdateParams());
 	}
+	else
+	{
+		StateManager->Change(EGameUnitState::Idle, FStateUpdateParams());
+	}
+	
 	// camera follow target.
 	const FVector verticalValue = UKismetMathLibrary::RotateAngleAxis(GetActorLocation() / 20.0f, CameraAddOffset.X, GetActorUpVector());
 	const FVector addOffset = FVector(0.0f, 0.0f, CameraAddOffset.Y);
@@ -90,9 +105,6 @@ void APlayerCommanderUnit::EndPlay(const EEndPlayReason::Type EndPlayReason)
 
 void APlayerCommanderUnit::OnPressedMoveForward(float axisValue)
 {
-	const FVector originLoc = GetActorLocation();
-	const FRotator originRot = GetActorRotation();
-	
 	FVector dir = GetActorRotation().UnrotateVector(GetActorForwardVector());
 	const FVector camLookDir = FollowCamera->GetActorForwardVector().Rotation().RotateVector(dir);
 	dir.X = camLookDir.X;
@@ -106,9 +118,6 @@ void APlayerCommanderUnit::OnPressedMoveForward(float axisValue)
 }
 void APlayerCommanderUnit::OnPressedRight(float axisValue)
 {
-	const FVector originLoc = GetActorLocation();
-	const FRotator originRot = GetActorRotation();
-	
 	FVector dir = GetActorRotation().UnrotateVector(GetActorRightVector());
 	const FVector camLookDir = FollowCamera->GetActorForwardVector().Rotation().RotateVector(dir);
 	dir.X = camLookDir.X;
@@ -132,7 +141,7 @@ void APlayerCommanderUnit::OnChangeAxisX(float axisValue)
 	
 	//TArray<FStringFormatArg> formatArg;
 	//formatArg.Add(FString::SanitizeFloat(axisValue));
-	//UE_LOG(LogTemp, Log, TEXT("APlayerCommanderUnit::OnMouseAxisX() axis : %s"), *FString::Format(TEXT("{0}"), formatArg));
+	//UE_LOG(LogTemp, Log, TEXT("APlayerCommanderUnit::OnChangeAxisX() axis : %s"), *FString::Format(TEXT("{0}"), formatArg));
 }
 
 void APlayerCommanderUnit::OnChangeAxisY(float axisValue)
@@ -141,9 +150,9 @@ void APlayerCommanderUnit::OnChangeAxisY(float axisValue)
 	
 	InputAxis.Y = axisValue;
 
-	//TArray<FStringFormatArg> formatArg;
-	//formatArg.Add(FString::SanitizeFloat(axisValue));
-	//UE_LOG(LogTemp, Log, TEXT("APlayerCommanderUnit::OnMouseAxisY() axis : %s"), *FString::Format(TEXT("{0}"), formatArg));
+	TArray<FStringFormatArg> formatArg;
+	formatArg.Add(FString::SanitizeFloat(axisValue));
+	UE_LOG(LogTemp, Log, TEXT("APlayerCommanderUnit::OnChangeAxisY() axis : %s"), *FString::Format(TEXT("{0}"), formatArg));
 }
 
 void APlayerCommanderUnit::OnCameraZoom(float axisValue)
@@ -183,5 +192,35 @@ FVector APlayerCommanderUnit::CalcCameraDistance(const FVector& camLocation) con
 {
 	const FVector dir = GetActorLocation() - camLocation;
 	return dir.GetSafeNormal() * CameraDistance * -1.0f;
+}
+
+void APlayerCommanderUnit::PlayAnimation(EGameUnitAnimType animType)
+{
+	//Super::PlayAnimation(animType);
+	EPlayerAnimType convertedType = EPlayerAnimType::None;
+	switch (animType)
+	{
+	case EGameUnitAnimType::Idle:
+		convertedType = EPlayerAnimType::Idle;
+		break;
+	case EGameUnitAnimType::Walk:
+		convertedType = EPlayerAnimType::Walk;
+		break;
+	case EGameUnitAnimType::Run:
+		convertedType = EPlayerAnimType::Run;
+		break;
+	case EGameUnitAnimType::Attack:
+		break;
+	case EGameUnitAnimType::Defeat:
+		break;
+	case EGameUnitAnimType::Dead:
+		break;
+	default:;
+	}
+	
+	// player 지휘관 유닛은 별도 애니메이션 처리.
+	const auto animSoftPtr = DataAsset->Animations.Find(convertedType);
+	CurrentMontage = MeshComponent->GetAnimInstance()->PlaySlotAnimationAsDynamicMontage(animSoftPtr->LoadSynchronous(), TEXT("DefaultSlot"),
+		0.25f, 0.25f, 1.0f, 1, -1.0f, 0.0f);
 }
 

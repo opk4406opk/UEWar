@@ -7,6 +7,7 @@
 #include "UIWidgetsAsset.generated.h"
 
 class UStartModeUI;
+class UInGameUI;
 /**
  * 
  */
@@ -17,4 +18,6 @@ class UEWAR_API UUIWidgetsAsset : public UDataAsset
 public:
 	UPROPERTY(EditDefaultsOnly, Category="ObjectPtr")
 	TSubclassOf<UStartModeUI> StartModeUIClass;
+	UPROPERTY(EditDefaultsOnly, Category="ObjectPtr")
+	TSubclassOf<UInGameUI> InGameUIClass;
 };

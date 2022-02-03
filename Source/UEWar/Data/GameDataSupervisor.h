@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "PlayerDataAsset.h"
 #include "Engine/DataAsset.h"
 #include "UEWar/GameEnumClass.h"
 #include "GameDataSupervisor.generated.h"
@@ -11,6 +12,7 @@
 class UMeleeUnitDataAsset;
 class UTableAsset;
 class UUIWidgetsAsset;
+class UPlayerDataAsset;
 
 struct FUnitAnimGroup;
 /**
@@ -24,6 +26,8 @@ class UEWAR_API UGameDataSupervisor final : public UDataAsset
 public:
 	FUnitAnimGroup* GetUnitAnimGroup(EGameUnitType unitType) const;
 public:
+	UPROPERTY(EditDefaultsOnly, Category="DataAsset_ObjectPtr")
+	TSoftObjectPtr<UPlayerDataAsset> PlayerDataAsset;
 	UPROPERTY(EditDefaultsOnly, Category="DataAsset_ObjectPtr")
 	TSoftObjectPtr<UMeleeUnitDataAsset> MeleeUnitDataAsset;
 	UPROPERTY(EditDefaultsOnly, Category="DataAsset_ObjectPtr")

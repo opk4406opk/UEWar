@@ -9,7 +9,7 @@
 /**
  * 
  */
-
+class UInGameUI;
 class AInGameLevelScriptActor;
 
 UCLASS()
@@ -19,8 +19,11 @@ class UEWAR_API AInGameMode : public AUEWarGameModeBase
 protected:
 	virtual void BeginPlay() override;
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
-
+public:
+	virtual void InitGame(const FString& MapName, const FString& Options, FString& ErrorMessage) override;
 private:
 	UPROPERTY(Transient)
 	AInGameLevelScriptActor* CurrentLevelScriptActor;
+	UPROPERTY(Transient)
+	TObjectPtr<UInGameUI> MainUIInstance = nullptr;
 };

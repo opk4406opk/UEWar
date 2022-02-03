@@ -17,6 +17,7 @@ class UEWAR_API AUEWarGameModeBase : public AGameModeBase
 
 public:
 	UUWGameInstance* GetGameInstance();
+	const float GetFPS() const;
 private:
 	UPROPERTY(Transient)
 	UUWGameInstance* CurGameInstance;
