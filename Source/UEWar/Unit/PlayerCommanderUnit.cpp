@@ -196,7 +196,7 @@ FVector APlayerCommanderUnit::CalcCameraDistance(const FVector& camLocation) con
 
 void APlayerCommanderUnit::PlayAnimation(EGameUnitAnimType animType)
 {
-	//Super::PlayAnimation(animType);
+	
 	EPlayerAnimType convertedType = EPlayerAnimType::None;
 	switch (animType)
 	{
@@ -221,6 +221,10 @@ void APlayerCommanderUnit::PlayAnimation(EGameUnitAnimType animType)
 	// player 지휘관 유닛은 별도 애니메이션 처리.
 	const auto animSoftPtr = DataAsset->Animations.Find(convertedType);
 	CurrentMontage = MeshComponent->GetAnimInstance()->PlaySlotAnimationAsDynamicMontage(animSoftPtr->LoadSynchronous(), TEXT("DefaultSlot"),
-		0.25f, 0.25f, 1.0f, 1, -1.0f, 0.0f);
+		0.25f, 0.25f, 1.0f, 99999, -1.0f, 0.0f);
+	
+	FOnMontageEnded blendOutDelegate;
+	blendOutDelegate.BindUObject(this, &APlayerCommanderUnit::OnAnimationEnd);
+	MeshComponent->GetAnimInstance()->Montage_SetBlendingOutDelegate(blendOutDelegate, CurrentMontage);
 }
 

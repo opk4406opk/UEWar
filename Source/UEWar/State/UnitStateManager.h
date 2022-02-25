@@ -29,4 +29,6 @@ public:
 private:
 	UPROPERTY(Transient)
 	TObjectPtr<UUnitStateBase> CurrentStateInstance;
+
+	EGameUnitState CurrentStateType = EGameUnitState::None;
 };

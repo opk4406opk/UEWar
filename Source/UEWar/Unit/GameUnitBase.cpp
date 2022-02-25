@@ -10,6 +10,7 @@
 #include "Components/CapsuleComponent.h"
 #include "UEWar/State/UnitStateManager.h"
 #include "Runtime/Engine/Classes/Animation/AnimInstance.h"
+#include "Runtime/Engine/Classes/Animation/AnimMontage.h"
 #include "UEWar/State/UnitStateBase.h"
 
 // Sets default values
@@ -55,14 +56,13 @@ void AGameUnitBase::Tick(float DeltaTime)
 
 void AGameUnitBase::PlayAnimation(EGameUnitAnimType animType)
 {
-	if(IsValid(CurrentMontage) == true)
-	{
-		
-	}
-
 	const auto animSoftPtr = AnimationGroup->Animations.Find(animType);
 	CurrentMontage = MeshComponent->GetAnimInstance()->PlaySlotAnimationAsDynamicMontage(animSoftPtr->LoadSynchronous(), TEXT("DefaultSlot"),
-		0.25f, 0.25f, 1.0f, 1, -1.0f, 0.0f);
+		0.25f, 0.25f, 1.0f, 99999, -1.0f, 0.0f);
+	
+	FOnMontageEnded blendOutDelegate;
+	blendOutDelegate.BindUObject(this, &AGameUnitBase::OnAnimationEnd);
+	MeshComponent->GetAnimInstance()->Montage_SetBlendingOutDelegate(blendOutDelegate, CurrentMontage);
 }
 
 AGameUnitBase::~AGameUnitBase()
@@ -77,5 +77,12 @@ void AGameUnitBase::EndPlay(const EEndPlayReason::Type EndPlayReason)
 
 void AGameUnitBase::OnAnimationEnd(UAnimMontage* animMontage, bool bInterrupted)
 {
-	
+	if(animMontage == CurrentMontage)
+	{
+		int8 tt = 0;
+	}
+	else
+	{
+		int8 t = 0;
+	}
 }

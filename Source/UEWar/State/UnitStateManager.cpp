@@ -14,11 +14,10 @@ void UUnitStateManager::Init(AGameUnitBase* owner)
 
 void UUnitStateManager::Change(EGameUnitState toState, FStateUpdateParams updateParams)
 {
-	if(IsValid(CurrentStateInstance) == true)
-	{
-		CurrentStateInstance->End();
-	}
+	if(toState == CurrentStateType) {return;}
+	if(IsValid(CurrentStateInstance) == true) {CurrentStateInstance->End();}
 
+	CurrentStateType = toState;
 	switch (toState)
 	{
 	case EGameUnitState::None:
