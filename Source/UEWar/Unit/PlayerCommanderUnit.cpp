@@ -27,7 +27,7 @@ APlayerCommanderUnit::APlayerCommanderUnit()
 void APlayerCommanderUnit::BeginPlay()
 {
 	// 플레이어 유닛 전용 애니메이션 데이터 에셋 설정.
-	DataAsset = Cast<AInGameMode>(GetWorld()->GetAuthGameMode())->GetGameInstance()->GetDataSupervisor()->PlayerDataAsset.LoadSynchronous();
+	DataAsset = Cast<AInGameMode>(GetWorld()->GetAuthGameMode())->GetGameInstance()->GetDataSupervisor()->PlayerDataAssetPtr.LoadSynchronous();
 	Super::BeginPlay();
 	
 	// camera spawn and setting. ///////////////////////////////////////////////////////

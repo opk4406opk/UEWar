@@ -7,5 +7,5 @@
 
 FUnitAnimGroup* UGameDataSupervisor::GetUnitAnimGroup(EGameUnitType unitType) const
 {
-	return MeleeUnitDataAsset.LoadSynchronous()->GetAnimGroup(unitType);
+	return MeleeUnitDataAssetPtr.LoadSynchronous()->GetAnimGroup(unitType);
 }
