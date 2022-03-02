@@ -7,6 +7,5 @@
 /IGNORE:4221
 /NODEFAULTLIB
 "D:\UE5_Workspace\UEWar\Plugins\Developer\RiderLink\Intermediate\Build\Win64\UnrealEditor\DebugGame\RiderBlueprintExtension\Module.RiderBlueprintExtension.cpp.obj"
-"D:\UE5_Workspace\UEWar\Plugins\Developer\RiderLink\Intermediate\Build\Win64\UnrealEditor\DebugGame\RiderBlueprintExtension\Default.rc2.res"
+"..\Intermediate\Build\Win64\UnrealEditor\Development\Default.rc2.res"
 /OUT:"D:\UE5_Workspace\UEWar\Plugins\Developer\RiderLink\Intermediate\Build\Win64\UnrealEditor\DebugGame\RiderBlueprintExtension\UnrealEditor-RiderBlueprintExtension-Win64-DebugGame.lib"
-/INCLUDE:IMPLEMENT_MODULE_RiderBlueprintExtension

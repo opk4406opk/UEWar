@@ -34,11 +34,8 @@ D:\UE5_Workspace\UEWar\Plugins\Developer\RiderLink\Source\RiderGameControlExtens
 /I Editor\LevelEditor\Public
 /I Developer
 /I Developer\Settings\Public
-/I ..\Intermediate\Build\Win64\UnrealEditor\Inc\IntroTutorials
-/I Editor\IntroTutorials\Public
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\UnrealEd
 /I Programs\UnrealLightmass\Public
-/I Developer\Android\AndroidDeviceDetection\Public\Interfaces
 /I Editor\UnrealEd\Classes
 /I Editor\UnrealEd\Public
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\AssetRegistry
@@ -60,6 +57,7 @@ D:\UE5_Workspace\UEWar\Plugins\Developer\RiderLink\Source\RiderGameControlExtens
 /I Editor\Persona\Public
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\SkeletonEditor
 /I Editor\SkeletonEditor\Public
+/I Developer\AnimationWidgets\Public
 /I Editor\AnimationEditor\Public
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\AdvancedPreviewScene
 /I Editor\AdvancedPreviewScene\Public
@@ -80,6 +78,7 @@ D:\UE5_Workspace\UEWar\Plugins\Developer\RiderLink\Source\RiderGameControlExtens
 /I Runtime\AIModule\Public
 /I Runtime\AIModule\Classes
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\Engine
+/I ..\Shaders\Shared
 /I Runtime\Engine\Classes
 /I Runtime\Engine\Public
 /I Runtime\Renderer\Public
@@ -91,6 +90,7 @@ D:\UE5_Workspace\UEWar\Plugins\Developer\RiderLink\Source\RiderGameControlExtens
 /I Runtime\AudioMixer\Classes
 /I Runtime\AudioMixer\Public
 /I Developer\TargetPlatform\Public
+/I Developer\TextureFormat\Public
 /I Runtime\AudioMixerCore\Public
 /I Runtime\SignalProcessing\Public
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\AnimationCore
@@ -105,6 +105,7 @@ D:\UE5_Workspace\UEWar\Plugins\Developer\RiderLink\Source\RiderGameControlExtens
 /I Runtime\ClothingSystemRuntimeInterface\Public
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\SourceControl
 /I Developer\SourceControl\Public
+/I Developer\UncontrolledChangelists\Public
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\VREditor
 /I Editor\VREditor
 /I Editor\VREditor\Public
@@ -115,11 +116,16 @@ D:\UE5_Workspace\UEWar\Plugins\Developer\RiderLink\Source\RiderGameControlExtens
 /I Runtime\RHI\Public
 /I Developer\DirectoryWatcher\Public
 /I Editor\Documentation\Public
+/I ..\Intermediate\Build\Win64\UnrealEditor\Inc\CoreOnline
+/I Runtime\CoreOnline\Public
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\NetCore
 /I Runtime\Net
 /I Runtime\Net\Core\Classes
 /I Runtime\Net\Core\Public
+/I Runtime\Net\Common\Public
 /I Runtime\Json\Public
+/I ..\Intermediate\Build\Win64\UnrealEditor\Inc\JsonUtilities
+/I Runtime\JsonUtilities\Public
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\SlateCore
 /I Runtime\SlateCore\Public
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\InputCore
@@ -127,8 +133,8 @@ D:\UE5_Workspace\UEWar\Plugins\Developer\RiderLink\Source\RiderGameControlExtens
 /I Runtime\InputCore\Public
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\Slate
 /I Runtime\Slate\Public
-/I ..\Intermediate\Build\Win64\UnrealEditor\Inc\ImageWrapper
 /I Runtime\ImageWrapper\Public
+/I ThirdParty
 /I Runtime\Messaging\Public
 /I Runtime\MessagingCommon\Public
 /I Runtime\RenderCore\Public
@@ -136,7 +142,6 @@ D:\UE5_Workspace\UEWar\Plugins\Developer\RiderLink\Source\RiderGameControlExtens
 /I Runtime\Analytics\AnalyticsET\Public
 /I Runtime\Analytics\Analytics\Public
 /I Runtime\Sockets\Public
-/I Runtime\Net\Common\Public
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\EngineMessages
 /I Runtime\EngineMessages\Public
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\EngineSettings
@@ -146,6 +151,8 @@ D:\UE5_Workspace\UEWar\Plugins\Developer\RiderLink\Source\RiderGameControlExtens
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\GameplayTags
 /I Runtime\GameplayTags\Classes
 /I Runtime\GameplayTags\Public
+/I ..\Intermediate\Build\Win64\UnrealEditor\Inc\DeveloperSettings
+/I Runtime\DeveloperSettings\Public
 /I Runtime\PacketHandlers\ReliabilityHandlerComponent\Public
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\AudioPlatformConfiguration
 /I Runtime\AudioPlatformConfiguration\Public
@@ -153,21 +160,22 @@ D:\UE5_Workspace\UEWar\Plugins\Developer\RiderLink\Source\RiderGameControlExtens
 /I Runtime\MeshDescription\Public
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\StaticMeshDescription
 /I Runtime\StaticMeshDescription\Public
+/I Runtime\SkeletalMeshDescription\Public
 /I Runtime\PakFile\Public
 /I Runtime\RSA\Public
 /I Runtime\NetworkReplayStreaming
 /I Runtime\NetworkReplayStreaming\NetworkReplayStreaming\Public
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\PhysicsCore
 /I Runtime\PhysicsCore\Public
-/I ..\Intermediate\Build\Win64\UnrealEditor\Inc\DeveloperSettings
-/I Runtime\DeveloperSettings\Public
 /I Runtime\Experimental\ChaosCore\Public
 /I ThirdParty\Intel
 /I Runtime\Experimental\Voronoi\Public
+/I Runtime\GeometryCore\Public
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\AudioExtensions
 /I Runtime\AudioExtensions\Public
-/I ..\Intermediate\Build\Win64\UnrealEditor\Inc\PropertyAccess
-/I Runtime\PropertyAccess\Public
+/I ..\Intermediate\Build\Win64\UnrealEditor\Inc\AudioLinkCore
+/I Runtime\AudioLink
+/I Runtime\AudioLink\AudioLinkCore\Public
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\Kismet
 /I Editor\Kismet\Classes
 /I Editor\Kismet\Public
@@ -178,7 +186,7 @@ D:\UE5_Workspace\UEWar\Plugins\Developer\RiderLink\Source\RiderGameControlExtens
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\EditorSubsystem
 /I Editor\EditorSubsystem\Public
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\InteractiveToolsFramework
-/I Runtime\Experimental\InteractiveToolsFramework\Public
+/I Runtime\InteractiveToolsFramework\Public
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\EditorStyle
 /I Editor\EditorStyle\Public
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\UnrealEdMessages
@@ -188,22 +196,27 @@ D:\UE5_Workspace\UEWar\Plugins\Developer\RiderLink\Source\RiderGameControlExtens
 /I Developer\GameplayDebugger\Public
 /I Runtime\Online
 /I Runtime\Online\HTTP\Public
-/I Runtime\UnrealAudio\Public
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\FunctionalTesting
 /I Developer\FunctionalTesting\Classes
 /I Developer\FunctionalTesting\Public
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\AutomationController
 /I Developer\AutomationController\Public
+/I ..\Intermediate\Build\Win64\UnrealEditor\Inc\AutomationTest
+/I Runtime\AutomationTest\Public
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\Localization
 /I Developer\Localization\Public
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\AudioEditor
 /I Editor\AudioEditor\Classes
 /I Editor\AudioEditor\Public
+/I ..\Intermediate\Build\Win64\UnrealEditor\Inc\AudioLinkEngine
+/I Runtime\AudioLink\AudioLinkEngine\Public
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\Landscape
 /I Runtime\Landscape\Classes
 /I Runtime\Landscape\Public
 /I Editor\ActorPickerMode\Public
 /I Editor\SceneDepthPickerMode\Public
+/I ..\Intermediate\Build\Win64\UnrealEditor\Inc\EditorConfig
+/I Editor\EditorConfig\Public
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\DetailCustomizations
 /I Editor\DetailCustomizations\Public
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\ClassViewer
@@ -216,7 +229,6 @@ D:\UE5_Workspace\UEWar\Plugins\Developer\RiderLink\Source\RiderGameControlExtens
 /I Editor\ContentBrowser\Public
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\ContentBrowserData
 /I Editor\ContentBrowserData\Public
-/I ThirdParty
 /I ThirdParty\libSampleRate\Public
 /I Runtime\NetworkFileSystem\Public
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\UMG
@@ -246,16 +258,25 @@ D:\UE5_Workspace\UEWar\Plugins\Developer\RiderLink\Source\RiderGameControlExtens
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\StatusBar
 /I Editor\StatusBar\Public
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\InterchangeCore
-/I Runtime\Interchange
-/I Runtime\Interchange\Core\Public
+/I Runtime\Experimental\Interchange
+/I Runtime\Experimental\Interchange\Core\Public
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\InterchangeEngine
-/I Runtime\Interchange\Engine\Public
+/I Runtime\Experimental\Interchange\Engine\Public
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\DeveloperToolSettings
 /I Developer\DeveloperToolSettings\Classes
 /I Developer\DeveloperToolSettings\Public
+/I ..\Intermediate\Build\Win64\UnrealEditor\Inc\SubobjectDataInterface
+/I Editor\SubobjectDataInterface\Public
+/I ..\Intermediate\Build\Win64\UnrealEditor\Inc\SubobjectEditor
+/I Editor\SubobjectEditor\Public
+/I ..\Intermediate\Build\Win64\UnrealEditor\Inc\PhysicsUtilities
+/I Developer\PhysicsUtilities\Public
+/I Developer\ToolWidgets\Public
 /I Runtime\Windows
-/I Runtime\Windows\XAudio2\Public
 /I D:\UE5_Workspace\UEWar\Plugins\Developer\RiderLink\Source\RiderGameControlExtension\Public
+/I ThirdParty\mimalloc\include
+/I ThirdParty\LibTiff\Source\Win64
+/I ThirdParty\LibTiff\Source
 /I ThirdParty\PhysX3\PxShared\include
 /I ThirdParty\PhysX3\PxShared\include\cudamanager
 /I ThirdParty\PhysX3\PxShared\include\filebuf
@@ -269,15 +290,17 @@ D:\UE5_Workspace\UEWar\Plugins\Developer\RiderLink\Source\RiderGameControlExtens
 /I ThirdParty\PhysX3\PhysX_3.4\Include\geometry
 /I "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE"
 /I "C:\Program Files (x86)\Windows Kits\NETFXSDK\4.6.1\include\um"
-/I "C:\Program Files (x86)\Windows Kits\10\include\10.0.16299.0\ucrt"
-/I "C:\Program Files (x86)\Windows Kits\10\include\10.0.16299.0\shared"
-/I "C:\Program Files (x86)\Windows Kits\10\include\10.0.16299.0\um"
-/I "C:\Program Files (x86)\Windows Kits\10\include\10.0.16299.0\winrt"
+/I "C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\ucrt"
+/I "C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared"
+/I "C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um"
+/I "C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\winrt"
 /FI"D:\UE5_Workspace\UEWar\Plugins\Developer\RiderLink\Intermediate\Build\Win64\UnrealEditor\DebugGame\RiderGameControlExtension\Definitions.h"
 /Fo"D:\UE5_Workspace\UEWar\Plugins\Developer\RiderLink\Intermediate\Build\Win64\UnrealEditor\DebugGame\RiderGameControlExtension\RiderGameControlExtension.cpp.obj"
+/sourceDependencies D:\UE5_Workspace\UEWar\Plugins\Developer\RiderLink\Intermediate\Build\Win64\UnrealEditor\DebugGame\RiderGameControlExtension\RiderGameControlExtension.cpp.json
 /Zc:inline
 /nologo
 /Oi
+/FC
 /c
 /Gw
 /Gy
@@ -293,6 +316,7 @@ D:\UE5_Workspace\UEWar\Plugins\Developer\RiderLink\Source\RiderGameControlExtens
 /Od
 /errorReport:prompt
 /EHsc
+/DPLATFORM_EXCEPTIONS_DISABLED=0
 /Z7
 /MD
 /bigobj
@@ -308,3 +332,4 @@ D:\UE5_Workspace\UEWar\Plugins\Developer\RiderLink\Source\RiderGameControlExtens
 /TP
 /GR
 /W4
+/std:c++17

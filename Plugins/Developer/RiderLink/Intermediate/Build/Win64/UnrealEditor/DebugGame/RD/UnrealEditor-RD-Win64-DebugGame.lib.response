@@ -61,6 +61,5 @@
 "D:\UE5_Workspace\UEWar\Plugins\Developer\RiderLink\Intermediate\Build\Win64\UnrealEditor\DebugGame\RD\stdout_sinks.cpp.obj"
 "D:\UE5_Workspace\UEWar\Plugins\Developer\RiderLink\Intermediate\Build\Win64\UnrealEditor\DebugGame\RD\thirdparty.cpp.obj"
 "D:\UE5_Workspace\UEWar\Plugins\Developer\RiderLink\Intermediate\Build\Win64\UnrealEditor\DebugGame\RD\RD.cpp.obj"
-"D:\UE5_Workspace\UEWar\Plugins\Developer\RiderLink\Intermediate\Build\Win64\UnrealEditor\DebugGame\RD\Default.rc2.res"
+"..\Intermediate\Build\Win64\UnrealEditor\Development\Default.rc2.res"
 /OUT:"D:\UE5_Workspace\UEWar\Plugins\Developer\RiderLink\Intermediate\Build\Win64\UnrealEditor\DebugGame\RD\UnrealEditor-RD-Win64-DebugGame.lib"
-/INCLUDE:IMPLEMENT_MODULE_RD
