@@ -58,10 +58,8 @@ void AInGameMode::Tick(float DeltaSeconds)
 		{
 			bOncePlayIntroAnim = true;
 			const FVector spawnLocation = CurrentLevelScriptActor->PlayerStartPoint->GetActorLocation();
-			auto ttt = GetGameInstance()->GetDataSupervisor()->UnitBPDataAssetPtr.LoadSynchronous();
-			auto t = ttt->PlayerUnitBP->GetClass();
-			auto testvalue = APlayerCommanderUnit::StaticClass();
-			APlayerCommanderUnit* playerUnit = GetWorld()->SpawnActor<APlayerCommanderUnit>(testvalue);
+			auto bpData = GetGameInstance()->GetDataSupervisor()->UnitBPDataAssetPtr.LoadSynchronous();
+			APlayerCommanderUnit* playerUnit = GetWorld()->SpawnActor<APlayerCommanderUnit>(bpData->PlayerUnitBP.Get());
 			playerUnit->SetActorLocation(spawnLocation);
 		}
 	}
