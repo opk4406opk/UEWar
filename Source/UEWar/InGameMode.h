@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "UEWarGameModeBase.h"
+#include "Runtime/Core/Public/UObject/ScriptDelegates.h"
 #include "InGameMode.generated.h"
 
 /**
@@ -11,6 +12,8 @@
  */
 class UInGameUI;
 class AInGameLevelScriptActor;
+class ULevelSequencePlayer;
+class ALevelSequenceActor;
 
 UCLASS()
 class UEWAR_API AInGameMode : public AUEWarGameModeBase
@@ -23,12 +26,18 @@ public:
 	virtual void InitGame(const FString& MapName, const FString& Options, FString& ErrorMessage) override;
 	virtual void Tick(float DeltaSeconds) override;
 private:
+	UFUNCTION()
+	void OnFinishIntroSeq_Internal();
+private:
 	UPROPERTY(Transient)
 	AInGameLevelScriptActor* CurrentLevelScriptActor;
 	UPROPERTY(Transient)
 	TObjectPtr<UInGameUI> MainUIInstance = nullptr;
 
-	float IntroTimeSec = 0.0f;
-	float ElapsedTimeSec = 0.0f;
-	bool bOncePlayIntroAnim = false;
+	UPROPERTY(Transient)
+	TObjectPtr<ULevelSequencePlayer> LevelSeqPlayer = nullptr;
+	UPROPERTY(Transient)
+	TObjectPtr<ALevelSequenceActor> LevelSeqActor = nullptr;
+	
+	TScriptDelegate<FWeakObjectPtr> OnFinishIntroSeq; 
 };

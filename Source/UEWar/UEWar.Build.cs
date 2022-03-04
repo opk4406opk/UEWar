@@ -8,7 +8,15 @@ public class UEWar : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "AIModule", "GameplayTasks", "UMG" });
+		PublicDependencyModuleNames.AddRange(new string[] { "Core",
+			"CoreUObject",
+			"Engine", 
+			"InputCore", 
+			"AIModule",
+			"GameplayTasks",
+			"UMG",
+			"LevelSequence",
+			"MovieScene" });
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
 

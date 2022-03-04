@@ -11,6 +11,7 @@
  */
 
 class UCameraAnim;
+class ULevelSequence;
 
 UCLASS()
 class UEWAR_API UCameraDataAsset : public UDataAsset
@@ -18,5 +19,5 @@ class UEWAR_API UCameraDataAsset : public UDataAsset
 	GENERATED_BODY()
 public:
 	UPROPERTY(EditDefaultsOnly)
-	TObjectPtr<UCameraAnim> IntroCameraAnim;
+	TObjectPtr<ULevelSequence> IntroCameraAnimSeq;
 };

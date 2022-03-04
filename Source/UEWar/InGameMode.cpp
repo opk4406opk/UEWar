@@ -3,15 +3,15 @@
 
 #include "InGameMode.h"
 #include "InGameLevelScriptActor.h"
+#include "LevelSequenceActor.h"
+#include "LevelSequencePlayer.h"
 #include "UWGameInstance.h"
 #include "Blueprint/UserWidget.h"
-#include "Camera/CameraAnim.h"
-#include "Camera/CameraAnimInst.h"
-#include "Controller/InGamePlayerController.h"
 #include "Data/CameraDataAsset.h"
 #include "Data/GameDataSupervisor.h"
 #include "Data/UIWidgetsAsset.h"
-#include "Runtime/Engine/Classes/Camera/CameraActor.h"
+#include "LevelSequence/Public/LevelSequence.h"
+#include "MovieSceneSequencePlayer.h"
 #include "Unit/PlayerCommanderUnit.h"
 #include "UserInterface/InGameUI.h"
 
@@ -21,12 +21,19 @@ void AInGameMode::BeginPlay()
 	
 	CurrentLevelScriptActor = Cast<AInGameLevelScriptActor>(GetWorld()->GetLevelScriptActor());
 	
-	UCameraAnim* introAnim = GetGameInstance()->GetDataSupervisor()->CameraDataAssetPtr.LoadSynchronous()->IntroCameraAnim;
-	check(introAnim);
-	
-	const AInGamePlayerController* playerController = Cast<AInGamePlayerController>(GetWorld()->GetFirstPlayerController());
-	const UCameraAnimInst* animInst = playerController->PlayerCameraManager->PlayCameraAnim(introAnim);
-	IntroTimeSec = animInst->CamAnim->AnimLength;
+	ULevelSequence* introAnimSeq = GetGameInstance()->GetDataSupervisor()->CameraDataAssetPtr.LoadSynchronous()->IntroCameraAnimSeq;
+	check(introAnimSeq);
+
+	FMovieSceneSequencePlaybackSettings playsetting;
+	ALevelSequenceActor* outActor = nullptr;
+	LevelSeqPlayer = ULevelSequencePlayer::CreateLevelSequencePlayer(GetWorld(), introAnimSeq, playsetting, outActor);
+	LevelSeqActor = outActor;
+	check(LevelSeqPlayer);
+	check(LevelSeqActor);
+
+	OnFinishIntroSeq.BindUFunction(this, TEXT("OnFinishIntroSeq_Internal"));
+	LevelSeqPlayer->OnFinished.Add(OnFinishIntroSeq);
+	LevelSeqPlayer->Play();
 }
 
 void AInGameMode::EndPlay(const EEndPlayReason::Type EndPlayReason)
@@ -42,8 +49,6 @@ void AInGameMode::InitGame(const FString& MapName, const FString& Options, FStri
 	check(MainUIInstance);
 	MainUIInstance->AddToViewport();
 
-	bOncePlayIntroAnim = false;
-
 	PrimaryActorTick.bCanEverTick = true;
 }
 
@@ -51,16 +56,13 @@ void AInGameMode::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 
-	if(bOncePlayIntroAnim == false)
-	{
-		ElapsedTimeSec += DeltaSeconds;
-		if(ElapsedTimeSec >= IntroTimeSec)
-		{
-			bOncePlayIntroAnim = true;
-			const FVector spawnLocation = CurrentLevelScriptActor->PlayerStartPoint->GetActorLocation();
-			auto bpData = GetGameInstance()->GetDataSupervisor()->UnitBPDataAssetPtr.LoadSynchronous();
-			APlayerCommanderUnit* playerUnit = GetWorld()->SpawnActor<APlayerCommanderUnit>(bpData->PlayerUnitBP.Get());
-			playerUnit->SetActorLocation(spawnLocation);
-		}
-	}
+	
+}
+
+void AInGameMode::OnFinishIntroSeq_Internal()
+{
+	const FVector spawnLocation = CurrentLevelScriptActor->PlayerStartPoint->GetActorLocation();
+	auto bpData = GetGameInstance()->GetDataSupervisor()->UnitBPDataAssetPtr.LoadSynchronous();
+	APlayerCommanderUnit* playerUnit = GetWorld()->SpawnActor<APlayerCommanderUnit>(bpData->PlayerUnitBP.Get());
+	playerUnit->SetActorLocation(spawnLocation);
 }

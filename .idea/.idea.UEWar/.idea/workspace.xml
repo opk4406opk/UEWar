@@ -74,8 +74,8 @@
     <setting file="file://$PROJECT_DIR$/Source/UEWar/InGameLevelScriptActor.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Intermediate/Build/Win64/UnrealEditor/Inc/UEWar/GameDataSupervisor.gen.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Intermediate/Build/Win64/UnrealEditor/Inc/UEWar/GameUnitBase.gen.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Intermediate/Build/Win64/UnrealEditor/Inc/UEWar/GameUnitBase.gen.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../UE5_main_branch/UnrealEngine/Engine/Source/Editor/Kismet/Private/BlueprintEditor.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../UE5_main_branch/UnrealEngine/Engine/Source/Runtime/Engine/Private/UnrealEngine.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/UEWar/UWGameInstance.cpp" root0="FORCE_HIGHLIGHTING" />
@@ -98,7 +98,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="XThreadsFramesViewSplitterKey" value="0.39251524" />
-    <property name="settings.editor.selected.configurable" value="configurable.group.editor" />
+    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.C#" />
   </component>
   <component name="RunManager" selected="C++ Project.UEWar">
     <configuration name="BaseTextureBuildWorker" type="CppProject" factoryName="C++ Project">
