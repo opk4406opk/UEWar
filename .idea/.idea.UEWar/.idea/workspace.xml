@@ -72,15 +72,11 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Source/UEWar/InGameLevelScriptActor.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Intermediate/Build/Win64/UnrealEditor/Inc/UEWar/GameDataSupervisor.gen.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Intermediate/Build/Win64/UnrealEditor/Inc/UEWar/GameUnitBase.gen.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../../UE5_main_branch/UnrealEngine/Engine/Source/Editor/Kismet/Private/BlueprintEditor.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../../UE5_main_branch/UnrealEngine/Engine/Source/Runtime/Engine/Private/UnrealEngine.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/UEWar/UWGameInstance.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/UEWar/UWGameInstance.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Intermediate/Build/Win64/UnrealEditor/Inc/UEWar/InGameMode.gen.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Intermediate/Build/Win64/UnrealEditor/Inc/UEWar/GameUnitBase.gen.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Intermediate/Build/Win64/UnrealEditor/Inc/UEWar/StartModeUI.gen.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/UEWar/InGameLevelScriptActor.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/UEWar/GameEnumClass.cpp" root0="FORCE_HIGHLIGHTING" />
@@ -88,6 +84,9 @@
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectId" id="22rBeu35kMnkDji9b1wAKEIBxHK" />
   <component name="ProjectViewState">
@@ -32531,5 +32530,16 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/../../UE5_main_branch/UnrealEngine/Engine/Source/Runtime/CoreUObject/Private/Internationalization/PackageLocalizationCache.cpp</url>
+          <line>246</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
